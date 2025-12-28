@@ -1,8 +1,15 @@
 import { motion } from 'motion/react';
 import { Target, Eye, Award, Users, TrendingUp, Shield, Linkedin, Mail } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import founderImage from 'figma:asset/128b7953a5462371606c128e5ba5f774e0fc453a.png';
 
-export function About() {
+type Page = 'home' | 'services' | 'about' | 'case-studies' | 'contact' | 'service-detail';
+
+interface AboutProps {
+  onNavigate?: (page: Page) => void;
+}
+
+export function About({ onNavigate }: AboutProps) {
   const values = [
     { icon: Award, title: 'Excellence', description: 'We deliver nothing short of exceptional quality in every project' },
     { icon: Shield, title: 'Integrity', description: 'Transparency and honesty guide all our business relationships' },
@@ -12,9 +19,9 @@ export function About() {
 
   const team = [
     {
-      name: 'Vikram Malhotra',
+      name: 'Hemang Khurana',
       role: 'Founder & CEO',
-      image: 'https://images.unsplash.com/photo-1581093805071-a04e696db334?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBidXNpbmVzcyUyMHRlYW18ZW58MXx8fHwxNzY1MTg2Njc2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      image: founderImage,
       bio: '15+ years in digital transformation and cybersecurity. Led technology initiatives for Fortune 500 companies.',
     },
     {
@@ -26,10 +33,10 @@ export function About() {
   ];
 
   const stats = [
-    { number: '200+', label: 'Projects Completed' },
-    { number: '50+', label: 'Happy Clients' },
+    { number: '200+', label: 'Completed Projects' },
     { number: '15+', label: 'Team Members' },
-    { number: '8+', label: 'Years Experience' },
+    { number: '14+', label: 'Industries Served' },
+    { number: '5+', label: 'Years Experience' },
   ];
 
   return (
@@ -51,16 +58,16 @@ export function About() {
             transition={{ duration: 0.8 }}
           >
             <div className="inline-block px-4 py-2 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-full text-[#00E5FF] text-sm mb-6">
-              About Us
+              About Cyberminars Digital
             </div>
             <h1 className="text-5xl md:text-6xl text-white mb-6">
-              Empowering Businesses Through{' '}
+              Leading Digital Agency Since 2020{' '}
               <span className="bg-gradient-to-r from-[#0A84FF] to-[#00E5FF] bg-clip-text text-transparent">
-                Digital Innovation
+                - Delivering IT & Marketing Excellence
               </span>
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              We&apos;re a team of passionate technologists, strategists, and creatives dedicated to transforming businesses through digital excellence
+              We are a full-service digital agency providing web development, digital marketing, cybersecurity, cloud solutions, and business consulting to companies across 4 countries
             </p>
           </motion.div>
         </div>
@@ -103,7 +110,7 @@ export function About() {
               </h2>
               <div className="space-y-4 text-gray-300">
                 <p>
-                  Founded in 2016, Cyberminars Digital emerged from a simple vision: to help businesses harness the power of technology without the complexity. What started as a small team of passionate developers has grown into a full-service digital agency serving clients across industries.
+                  Founded in 2020, Cyberminars Digital emerged from a simple vision: to help businesses harness the power of technology without the complexity. What started as a small team of passionate developers has grown into a full-service digital agency serving clients across industries.
                 </p>
                 <p>
                   Based in the vibrant tech ecosystem of Jaipur, we&apos;ve built our reputation on delivering exceptional results through a combination of technical expertise, strategic thinking, and genuine partnership with our clients.
@@ -275,7 +282,10 @@ export function About() {
             <p className="text-xl text-white/90 mb-8">
               Let&apos;s work together to transform your business and achieve extraordinary results
             </p>
-            <button className="px-10 py-5 bg-white text-[#0A84FF] rounded-lg hover:shadow-2xl transition-all text-lg">
+            <button 
+              onClick={() => onNavigate?.('contact')}
+              className="px-10 py-5 bg-white text-[#0A84FF] rounded-lg hover:shadow-2xl transition-all text-lg font-semibold hover:scale-105 duration-300"
+            >
               Get in Touch
             </button>
           </motion.div>

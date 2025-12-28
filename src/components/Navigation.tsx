@@ -1,4 +1,4 @@
-import { Menu, X } from 'lucide-react';
+import { Menu, X, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 import image_f353f671dd6fa70fa74a1c5dc54f51bf3b87173d from 'figma:asset/f353f671dd6fa70fa74a1c5dc54f51bf3b87173d.png';
 
@@ -20,11 +20,15 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     { label: 'Contact', page: 'contact' as Page },
   ];
 
+  const handleWhatsApp = () => {
+    window.open('https://wa.me/918306446838?text=Hi!%20I%20want%20to%20discuss%20a%20project', '_blank');
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0B0F17]/95 backdrop-blur-md border-b border-[#00E5FF]/10">
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo - Pure White Minimal Version */}
           <button 
             onClick={() => {
               onNavigate('home');
@@ -32,17 +36,12 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
             }}
             className="flex items-center group"
           >
-            <div className="relative px-4 py-2 rounded-lg bg-gradient-to-br from-[#0A1929] via-[#0B1420] to-[#0A0F1C]">
-              <img 
-                src={image_f353f671dd6fa70fa74a1c5dc54f51bf3b87173d} 
-                alt="Cyberminars Digital" 
-                className="h-16 w-auto relative z-10"
-                style={{
-                  filter: 'brightness(1.2) contrast(1.3) drop-shadow(0 0 8px rgba(0, 229, 255, 0.4)) drop-shadow(0 0 12px rgba(10, 132, 255, 0.3))'
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0A84FF]/5 to-[#00E5FF]/5 rounded-lg blur-sm"></div>
-            </div>
+            <img 
+              src={image_f353f671dd6fa70fa74a1c5dc54f51bf3b87173d} 
+              alt="Cyberminars Digital" 
+              className="h-16 md:h-20 lg:h-24 w-auto group-hover:scale-105 transition-transform"
+              style={{ filter: 'drop-shadow(0 0 8px rgba(0, 229, 255, 0.3))' }}
+            />
           </button>
 
           {/* Desktop Navigation */}
@@ -51,7 +50,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
               <button
                 key={item.page}
                 onClick={() => onNavigate(item.page)}
-                className={`transition-colors ${
+                className={`transition-colors font-medium ${ 
                   currentPage === item.page
                     ? 'text-[#00E5FF]'
                     : 'text-gray-300 hover:text-white'
@@ -60,11 +59,22 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
                 {item.label}
               </button>
             ))}
+            
+            {/* WhatsApp CTA */}
+            <button 
+              onClick={handleWhatsApp}
+              className="px-4 py-2 bg-[#25D366] text-white rounded-lg hover:bg-[#128C7E] transition-all flex items-center gap-2"
+            >
+              <MessageCircle size={18} />
+              <span className="hidden lg:inline">WhatsApp</span>
+            </button>
+
+            {/* Main CTA */}
             <button 
               onClick={() => onNavigate('contact')}
-              className="px-6 py-2 bg-gradient-to-r from-[#0A84FF] to-[#00E5FF] text-white rounded-lg hover:shadow-lg hover:shadow-[#00E5FF]/50 transition-all"
+              className="px-6 py-2 bg-gradient-to-r from-[#0A84FF] to-[#00E5FF] text-white rounded-lg hover:shadow-lg hover:shadow-[#00E5FF]/50 transition-all font-semibold"
             >
-              Get Strategy Call
+              Get Free Strategy Call
             </button>
           </div>
 
@@ -87,7 +97,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
                   onNavigate(item.page);
                   setMobileMenuOpen(false);
                 }}
-                className={`block w-full text-left py-2 transition-colors ${
+                className={`block w-full text-left py-2 transition-colors font-medium ${
                   currentPage === item.page
                     ? 'text-[#00E5FF]'
                     : 'text-gray-300'
@@ -96,14 +106,23 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
                 {item.label}
               </button>
             ))}
+            
+            <button 
+              onClick={handleWhatsApp}
+              className="w-full px-4 py-2 bg-[#25D366] text-white rounded-lg flex items-center justify-center gap-2"
+            >
+              <MessageCircle size={18} />
+              WhatsApp
+            </button>
+
             <button 
               onClick={() => {
                 onNavigate('contact');
                 setMobileMenuOpen(false);
               }}
-              className="w-full px-6 py-2 bg-gradient-to-r from-[#0A84FF] to-[#00E5FF] text-white rounded-lg"
+              className="w-full px-6 py-2 bg-gradient-to-r from-[#0A84FF] to-[#00E5FF] text-white rounded-lg font-semibold"
             >
-              Get Strategy Call
+              Get Free Strategy Call
             </button>
           </div>
         )}

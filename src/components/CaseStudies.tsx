@@ -1,7 +1,13 @@
 import { motion } from 'motion/react';
 import { TrendingUp, Shield, Cloud, ShoppingCart, Building2, Smartphone } from 'lucide-react';
 
-export function CaseStudies() {
+type Page = 'home' | 'services' | 'about' | 'case-studies' | 'contact' | 'service-detail';
+
+interface CaseStudiesProps {
+  onNavigate?: (page: Page) => void;
+}
+
+export function CaseStudies({ onNavigate }: CaseStudiesProps) {
   const caseStudies = [
     {
       title: 'E-commerce Platform Transformation',
@@ -120,13 +126,13 @@ export function CaseStudies() {
             transition={{ duration: 0.8 }}
           >
             <div className="inline-block px-4 py-2 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-full text-[#00E5FF] text-sm mb-6">
-              Case Studies
+              Client Success Stories
             </div>
             <h1 className="text-5xl md:text-6xl text-white mb-6">
-              Success <span className="bg-gradient-to-r from-[#0A84FF] to-[#00E5FF] bg-clip-text text-transparent">Stories</span>
+              Case Studies & Portfolio <span className="bg-gradient-to-r from-[#0A84FF] to-[#00E5FF] bg-clip-text text-transparent">- Proven Results</span>
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Real results for real businesses. Discover how we&apos;ve helped companies across industries achieve their digital transformation goals.
+              Real-world success stories showing how our digital marketing, web development, cybersecurity, and IT solutions have transformed businesses across industries
             </p>
           </motion.div>
         </div>
@@ -211,7 +217,10 @@ export function CaseStudies() {
             <p className="text-xl text-white/90 mb-8">
               Let&apos;s discuss how we can help you achieve similar results
             </p>
-            <button className="px-10 py-5 bg-white text-[#0A84FF] rounded-lg hover:shadow-2xl transition-all text-lg">
+            <button 
+              onClick={() => onNavigate?.('contact')}
+              className="px-10 py-5 bg-white text-[#0A84FF] font-semibold rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 text-lg"
+            >
               Start Your Project
             </button>
           </motion.div>

@@ -1,9 +1,11 @@
 import { motion } from 'motion/react';
+import { useState, useEffect } from 'react';
 import { 
   Megaphone, Lock, Code, Video, Briefcase, Server, 
   ArrowRight, Search, Target, FileText, Palette,
   Shield, Database, Cloud, BarChart, Zap
 } from 'lucide-react';
+import { supabase, Service } from '../lib/supabase';
 
 type Page = 'home' | 'services' | 'about' | 'case-studies' | 'contact' | 'service-detail';
 
@@ -11,79 +13,140 @@ interface ServicesProps {
   onNavigate: (page: Page, service?: string) => void;
 }
 
+// Icon mapping helper
+const iconMap: Record<string, any> = {
+  Megaphone, Lock, Code, Video, Briefcase, Server,
+  Search, Target, FileText, Palette, Shield, Database,
+  Cloud, BarChart, Zap
+};
+
 export function Services({ onNavigate }: ServicesProps) {
-  const services = [
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('services')
+        .select('*')
+        .order('order_index', { ascending: true });
+
+      if (error) throw error;
+      setServices(data || []);
+    } catch (error) {
+      console.error('Error fetching services:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fallback services if database is empty
+  const fallbackServices = [
     {
       id: 'digital-marketing',
-      icon: Megaphone,
+      icon: 'Megaphone',
       title: 'Digital Marketing',
       description: 'Drive growth with data-driven marketing strategies. We offer SEO, PPC, social media marketing, content strategy, and branding solutions that deliver measurable results.',
       features: ['SEO Optimization', 'PPC Campaigns', 'Social Media Marketing', 'Content Strategy', 'Brand Development', 'Email Marketing'],
       gradient: 'from-blue-500 to-cyan-400',
       iconBg: 'bg-blue-500/10',
-      iconColor: 'text-blue-400'
+      iconColor: 'text-blue-400',
+      image_url: '',
+      order_index: 0,
+      created_at: '',
+      updated_at: ''
     },
     {
       id: 'web-development',
-      icon: Code,
+      icon: 'Code',
       title: 'Web Design & Development',
       description: 'Create stunning, high-performance websites and web applications. Custom solutions built with modern frameworks, optimized for speed, SEO, and conversions.',
       features: ['Custom Websites', 'Web Applications', 'E-commerce Platforms', 'CMS Development', 'API Integration', 'Performance Optimization'],
       gradient: 'from-purple-500 to-pink-400',
       iconBg: 'bg-purple-500/10',
-      iconColor: 'text-purple-400'
+      iconColor: 'text-purple-400',
+      image_url: '',
+      order_index: 1,
+      created_at: '',
+      updated_at: ''
     },
     {
       id: 'ui-ux-design',
-      icon: Palette,
+      icon: 'Palette',
       title: 'UI/UX Design',
       description: 'Design exceptional user experiences that convert. From wireframes to high-fidelity prototypes, we create intuitive interfaces that users love.',
       features: ['User Research', 'Wireframing', 'Prototyping', 'Visual Design', 'Design Systems', 'Usability Testing'],
       gradient: 'from-pink-500 to-rose-400',
       iconBg: 'bg-pink-500/10',
-      iconColor: 'text-pink-400'
+      iconColor: 'text-pink-400',
+      image_url: '',
+      order_index: 2,
+      created_at: '',
+      updated_at: ''
     },
     {
       id: 'cybersecurity',
-      icon: Lock,
+      icon: 'Lock',
       title: 'Cybersecurity Solutions',
       description: 'Protect your business with enterprise-grade security. Comprehensive security audits, threat detection, compliance management, and incident response.',
       features: ['Security Audits', 'Penetration Testing', 'Compliance Management', 'Threat Detection', 'Incident Response', 'Security Training'],
       gradient: 'from-red-500 to-orange-400',
       iconBg: 'bg-red-500/10',
-      iconColor: 'text-red-400'
+      iconColor: 'text-red-400',
+      image_url: '',
+      order_index: 3,
+      created_at: '',
+      updated_at: ''
     },
     {
       id: 'business-consulting',
-      icon: Briefcase,
+      icon: 'Briefcase',
       title: 'Business Strategy & Consulting',
       description: 'Strategic guidance for digital transformation. We help businesses optimize processes, implement technology solutions, and achieve sustainable growth.',
       features: ['Digital Transformation', 'Process Optimization', 'Technology Consulting', 'Market Analysis', 'Growth Strategy', 'Change Management'],
       gradient: 'from-indigo-500 to-blue-400',
       iconBg: 'bg-indigo-500/10',
-      iconColor: 'text-indigo-400'
+      iconColor: 'text-indigo-400',
+      image_url: '',
+      order_index: 4,
+      created_at: '',
+      updated_at: ''
     },
     {
       id: 'graphics-video',
-      icon: Video,
+      icon: 'Video',
       title: 'Graphics & Video Production',
       description: 'Professional design and video services that captivate audiences. From branding to motion graphics, we bring your vision to life with creative excellence.',
       features: ['Brand Identity', 'Graphic Design', 'Motion Graphics', 'Video Editing', 'Animation', 'Social Media Content'],
       gradient: 'from-green-500 to-emerald-400',
       iconBg: 'bg-green-500/10',
-      iconColor: 'text-green-400'
+      iconColor: 'text-green-400',
+      image_url: '',
+      order_index: 5,
+      created_at: '',
+      updated_at: ''
     },
     {
       id: 'cloud-server',
-      icon: Server,
+      icon: 'Server',
       title: 'Cloud & Server Management',
       description: 'Reliable cloud infrastructure and server management. We handle setup, migration, monitoring, and optimization for AWS, Azure, and Google Cloud.',
       features: ['Cloud Migration', 'Server Setup', 'Infrastructure Management', 'Monitoring & Alerts', 'Cost Optimization', 'Backup & Recovery'],
       gradient: 'from-yellow-500 to-orange-400',
       iconBg: 'bg-yellow-500/10',
-      iconColor: 'text-yellow-400'
+      iconColor: 'text-yellow-400',
+      image_url: '',
+      order_index: 6,
+      created_at: '',
+      updated_at: ''
     },
   ];
+
+  const displayServices = services.length > 0 ? services : fallbackServices;
 
   return (
     <div className="pt-20 min-h-screen">
@@ -104,13 +167,13 @@ export function Services({ onNavigate }: ServicesProps) {
             transition={{ duration: 0.8 }}
           >
             <div className="inline-block px-4 py-2 bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-full text-[#00E5FF] text-sm mb-6">
-              Our Services
+              Full-Service Digital Agency
             </div>
             <h1 className="text-5xl md:text-6xl text-white mb-6">
-              Comprehensive <span className="bg-gradient-to-r from-[#0A84FF] to-[#00E5FF] bg-clip-text text-transparent">Digital Solutions</span>
+              Digital Marketing, Web Development & IT Solutions <span className="bg-gradient-to-r from-[#0A84FF] to-[#00E5FF] bg-clip-text text-transparent">That Drive Results</span>
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              End-to-end services designed to accelerate your digital transformation and drive sustainable growth
+              Comprehensive digital services including web development, digital marketing, cybersecurity, cloud infrastructure, and business automation solutions for growing companies
             </p>
           </motion.div>
         </div>
@@ -119,43 +182,58 @@ export function Services({ onNavigate }: ServicesProps) {
       {/* Services Grid */}
       <section className="py-20 bg-[#0B0F17]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                onClick={() => onNavigate('service-detail', service.id)}
-                className="p-8 bg-gradient-to-br from-[#1a1f2e] to-[#0B0F17] border border-[#00E5FF]/10 rounded-2xl hover:border-[#00E5FF]/30 transition-all group cursor-pointer"
-              >
-                <div className="flex items-start gap-6 mb-6">
-                  <div className={`w-16 h-16 rounded-xl ${service.iconBg} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
-                    <service.icon size={32} className={service.iconColor} />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl text-white mb-2">{service.title}</h3>
-                    <p className="text-gray-400">{service.description}</p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 mb-6">
-                  {service.features.map((feature) => (
-                    <div key={feature} className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#00E5FF]" />
-                      <span className="text-gray-300 text-sm">{feature}</span>
+          {loading ? (
+            <div className="text-center text-white py-20">Loading services...</div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {displayServices.map((service, index) => {
+                const IconComponent = iconMap[service.icon] || Code;
+                return (
+                  <motion.div
+                    key={service.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    onClick={() => onNavigate('service-detail', service.id)}
+                    className="p-8 bg-gradient-to-br from-[#1a1f2e] to-[#0B0F17] border border-[#00E5FF]/10 rounded-2xl hover:border-[#00E5FF]/30 transition-all group cursor-pointer"
+                  >
+                    <div className="flex items-start gap-6 mb-6">
+                      <div className={`w-16 h-16 rounded-xl bg-blue-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                        <IconComponent size={32} className="text-blue-400" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-2xl text-white mb-2">{service.title}</h3>
+                        <p className="text-gray-400">{service.description}</p>
+                      </div>
                     </div>
-                  ))}
-                </div>
 
-                <button className="flex items-center gap-2 text-[#00E5FF] group-hover:gap-3 transition-all">
-                  Learn More
-                  <ArrowRight size={18} />
-                </button>
-              </motion.div>
-            ))}
-          </div>
+                    {service.image_url && (
+                      <img 
+                        src={service.image_url} 
+                        alt={service.title}
+                        className="w-full h-48 object-cover rounded-lg mb-6"
+                      />
+                    )}
+
+                    <div className="grid grid-cols-2 gap-3 mb-6">
+                      {service.features.map((feature) => (
+                        <div key={feature} className="flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 rounded-full bg-[#00E5FF]" />
+                          <span className="text-gray-300 text-sm">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <button className="flex items-center gap-2 text-[#00E5FF] group-hover:gap-3 transition-all">
+                      Learn More
+                      <ArrowRight size={18} />
+                    </button>
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
