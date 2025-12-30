@@ -1,7 +1,6 @@
 import { motion } from 'motion/react';
 import { Target, Eye, Award, Users, TrendingUp, Shield, Linkedin, Mail } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import founderImage from 'figma:asset/128b7953a5462371606c128e5ba5f774e0fc453a.png';
 
 type Page = 'home' | 'services' | 'about' | 'case-studies' | 'contact' | 'service-detail';
 
@@ -21,7 +20,7 @@ export function About({ onNavigate }: AboutProps) {
     {
       name: 'Hemang Khurana',
       role: 'Founder & CEO',
-      image: founderImage,
+      image: 'https://blbkgtyujiwhbrtccsll.supabase.co/storage/v1/object/public/image/235A0996.jpg',
       bio: '15+ years in digital transformation and cybersecurity. Led technology initiatives for Fortune 500 companies.',
     },
     {

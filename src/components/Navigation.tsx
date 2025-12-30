@@ -36,12 +36,13 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
             }}
             className="flex items-center group"
           >
-            <img 
-              src={image_f353f671dd6fa70fa74a1c5dc54f51bf3b87173d} 
-              alt="Cyberminars Digital" 
+            <img
+              src="https://blbkgtyujiwhbrtccsll.supabase.co/storage/v1/object/public/image/ChatGPT%20Image%20Dec%2010,%202025,%2002_25_38%20PM.png"
+              alt="Cyberminars Digital"
               className="h-16 md:h-20 lg:h-24 w-auto group-hover:scale-105 transition-transform"
               style={{ filter: 'drop-shadow(0 0 8px rgba(0, 229, 255, 0.3))' }}
             />
+
           </button>
 
           {/* Desktop Navigation */}

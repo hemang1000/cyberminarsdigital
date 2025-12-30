@@ -1,5 +1,5 @@
 import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram, MessageCircle, Lock } from 'lucide-react';
-import logo from 'figma:asset/f353f671dd6fa70fa74a1c5dc54f51bf3b87173d.png';
+
 
 type Page = 'home' | 'services' | 'about' | 'case-studies' | 'contact' | 'service-detail' | 'admin';
 
@@ -16,12 +16,13 @@ export function Footer({ onNavigate }: FooterProps) {
           <div className="lg:col-span-2">
             <div className="mb-6">
               {/* Pure White Logo */}
-              <img 
-                src={logo} 
-                alt="Cyberminars Digital" 
-                className="h-20 w-auto mb-4"
+              <img
+                src="https://blbkgtyujiwhbrtccsll.supabase.co/storage/v1/object/public/image/ChatGPT%20Image%20Dec%2010,%202025,%2002_25_38%20PM.png"
+                alt="Cyberminars Digital"
+                className="h-16 md:h-20 lg:h-24 w-auto group-hover:scale-105 transition-transform"
                 style={{ filter: 'drop-shadow(0 0 8px rgba(0, 229, 255, 0.3))' }}
               />
+
             </div>
             <p className="text-gray-400 text-sm mb-6 leading-relaxed max-w-sm">
               A full-service digital agency specializing in IT infrastructure, cloud solutions, cybersecurity, digital marketing, and creative services for businesses worldwide.
